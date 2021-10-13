@@ -36,7 +36,7 @@ pipeline {
         
         steps {
             withAWS(credentials: 'tf_user_ec2') {
-                sh '/Users/shashanksrivastava/terraform.sh'
+                sh 'terraform.sh'
             }
         }
     }
