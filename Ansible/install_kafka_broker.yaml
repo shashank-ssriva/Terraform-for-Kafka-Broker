@@ -1,0 +1,34 @@
+---
+- hosts: broker
+  become: true
+  tasks:
+  - name: Download Apache Broker Tarball
+    command: wget https://dlcdn.apache.org/kafka/3.0.0/kafka_2.13-3.0.0.tgz
+    args:
+      chdir: /opt
+  
+  - name: Install JDK
+    yum:
+      name: java-1.8.0-openjdk.x86_64
+      state: present
+
+  - name: Extract Apache Zookeeper Tarball
+    command: tar -xf kafka_2.13-3.0.0.tgz
+    args:
+      chdir: /opt
+    
+  - name: Create Broker server configuration file.
+    ansible.builtin.copy:
+      src: server.properties
+      dest: /opt/kafka_2.13-3.0.0/config/server.properties
+
+  - name: Install Broker service
+    ansible.builtin.copy:
+      src: kafka.service
+      dest: /etc/systemd/system/kafka.service
+
+  - name: Start Broker service
+    command: systemctl start kafka
+
+  - name: Enable Broker service at boot time
+    command: systemctl enable kafka

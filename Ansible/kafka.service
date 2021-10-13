@@ -1,0 +1,11 @@
+[Unit]
+Description=Broker Daemon
+
+[Service]
+Type=simple
+ExecStart=/bin/sh -c '/opt/kafka_2.13-3.0.0/bin/kafka-server-start.sh /opt/kafka_2.13-3.0.0/config/server.properties > /opt/kafka_2.13-3.0.0/kafka/kafka.log 2>&1'
+ExecStop=/opt/kafka_2.13-3.0.0/bin/kafka-server-stop.sh
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target
