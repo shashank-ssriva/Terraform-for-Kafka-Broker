@@ -48,13 +48,15 @@ pipeline {
                 }
             }
         steps {
+            step{
             def userInput = input(
-                id: 'userInput', message: 'Let\'s promote?', parameters: [
-                    [$class: 'TextParameterDefinition', defaultValue: 'uat', description: 'Environment', name: 'env']
-            ])
-                echo ("Env: "+userInput)
+ id: 'userInput', message: 'Let\'s promote?', parameters: [
+ [$class: 'TextParameterDefinition', defaultValue: 'uat', description: 'Environment', name: 'env']
+])
+echo ("Env: "+userInput)
                 sh '/opt/homebrew/bin/ansible-playbook -i /Users/shashanksrivastava/ansible_hosts Ansible/install_kafka_broker.yaml'
             }
+    }
     }
 
     stage('Destroy Kafka Broker EC2 instance') {
