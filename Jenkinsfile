@@ -60,7 +60,7 @@ pipeline {
             }
         
         steps {
-            input('Do you want to proceed?')
+            input('Do you really want to destroy?')
             withAWS(credentials: 'tf_user_ec2') {
                 sh '/opt/homebrew/bin/terraform destroy -auto-approve'
             }
